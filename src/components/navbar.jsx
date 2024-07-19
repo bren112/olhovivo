@@ -19,7 +19,7 @@ function Navbar() {
     <nav className='nav'>
       <div className="logo">
         <img src={logo} alt="" srcset="" id='img'/>
-    <Link to="/" className="nav__brand" id='logo'>OLHO<span id='logopt2'>VIVO</span></Link>
+    <Link to="/" className="nav__brand" id='logo'>OLHO<span id='logopt2'>VIVO</span> PARANÁ</Link>
       </div>
     <ul className={active}>
         <li className="nav__item"><Link to="/" className="nav__link">Home</Link></li>
