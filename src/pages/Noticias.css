@@ -114,6 +114,9 @@
   .lupa{
     color: white;
   }
+  .filtrar{
+    margin-left: 2pc;
+  }
   #title{
     text-align: center;
     font-size: 2.2pc;
@@ -122,10 +125,37 @@
   }
   .procurar{
     display: flex;
-    justify-content: end;
+    justify-content: space-between;
   }
   .search{
     margin-right: 2pc;
     display: flex;
     gap: 1pc;
+  }
+  #green{
+    color: rgb(5, 230, 5);
+  }
+  #cultura{
+    color: orange;
+  }
+  #ciencia{
+    color: rgb(173, 173, 26);
+  }
+  #variedades{
+    color: purple;
+  }
+  #casos{
+    color: red;
+  }
+  #todos{
+    color: blue;
+  }
+  #select{
+    height: 3pc;
+  }
+  @media (max-width: 820px) {
+    .procurar{
+      display: flex;
+      flex-direction: column-reverse;
+    }
   }
