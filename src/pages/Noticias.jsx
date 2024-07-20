@@ -69,10 +69,9 @@ function Noticias() {
           <select id='select' value={selectedEstilo} onChange={(e) => setSelectedEstilo(e.target.value)}>
             <option value="" id='todos'>Todos os estilos</option>
             <option value="Esporte" id='green'>Esporte</option>
-            <option value="Variedades" id='variedades'>Variedades</option>
-            <option value="Cultura" id='cultura'>Cultura</option>
-            <option value="Ciência" id='ciencia'>Ciência</option>
-            <option value="Casos" id='casos'>Casos</option>
+          
+            <option value="noticia" id='cultura'>Notícia</option>
+           
           </select>
         </div>
         </div>
