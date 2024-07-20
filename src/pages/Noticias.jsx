@@ -70,7 +70,7 @@ function Noticias() {
             <option value="" id='todos'>Todos os estilos</option>
             <option value="Esporte" id='green'>Esporte</option>
           
-            <option value="noticia" id='cultura'>Notícia</option>
+            <option value="noticia" id='cultura'>Notícias</option>
            
           </select>
         </div>
