@@ -65,21 +65,53 @@
     white-space: nowrap; /* Impede a quebra de linha */
     animation: scrolling-text 20s linear infinite; /* Aplica a animação ao texto */
   }
-  .colaborador-avatar{
-    width: 6pc;
+  
+.colaboradores {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.colaborador {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 100px;
+}
+
+.colaborador-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+.colaborador-nome {
+  text-align: center;
+  font-size: 0.9em;
+}
+
+@media (max-width: 768px) {
+  .colaborador {
+    max-width: 70px;
   }
-  .colaboradores{
-    display: flex;
-    justify-content: space-around;
+
+  .colaborador-avatar {
+    width: 60px;
+    height: 60px;
   }
-  .colaborador{
-    display: flex;
-    flex-direction: column-reverse;
-    gap: 1pc;
+}
+
+@media (max-width: 480px) {
+  .colaborador {
+    max-width: 50px;
   }
- .colaborador-nome{
-    font-size: 1.4pc;
-    text-align: center;
+
+  .colaborador-avatar {
+    width: 40px;
+    height: 40px;
+  }
 
   }
   @keyframes scrolling-text {
