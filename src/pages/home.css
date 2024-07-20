@@ -65,7 +65,23 @@
     white-space: nowrap; /* Impede a quebra de linha */
     animation: scrolling-text 20s linear infinite; /* Aplica a animação ao texto */
   }
-  
+  .colaborador-avatar{
+    width: 6pc;
+  }
+  .colaboradores{
+    display: flex;
+    justify-content: space-around;
+  }
+  .colaborador{
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 1pc;
+  }
+ .colaborador-nome{
+    font-size: 1.4pc;
+    text-align: center;
+
+  }
   @keyframes scrolling-text {
     0% {
       transform: translateX(-100%);
