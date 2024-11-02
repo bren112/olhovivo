@@ -93,8 +93,8 @@ function Noticias() {
       if (noticia) {
         document.title = `OLHOVIVO - ${noticia.titulo}`;
         document.querySelector('meta[property="og:title"]').setAttribute("content", `OLHOVIVO - ${noticia.titulo}`);
-        document.querySelector('meta[property="og:description"]').setAttribute("content", noticia.resumo || "Veja as últimas notícias no OLHOVIVO.");
-        document.querySelector('meta[property="og:image"]').setAttribute("content", noticia.imagem || "URL_da_imagem_default");
+        document.querySelector('meta[property="og:description"]').setAttribute("content", noticia.resumo );
+        document.querySelector('meta[property="og:image"]').setAttribute("content", noticia.imagem );
         document.querySelector('meta[property="og:url"]').setAttribute("content", `${window.location.origin}/noticias/${noticiaId}`);
       }
     }
