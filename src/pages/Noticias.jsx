@@ -7,7 +7,7 @@ function Noticias() {
   const [noticias, setNoticias] = useState([]);
   const [mostrarTextoCompleto, setMostrarTextoCompleto] = useState({});
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedEstilo, setSelectedEstilo] = useState(''); // Estado para o estilo selecionado
+  const [selectedEstilo, setSelectedEstilo] = useState('');
   const { noticiaId } = useParams();
 
   useEffect(() => {
@@ -20,7 +20,6 @@ function Noticias() {
       if (error) {
         throw error;
       }
-      // Ordenando as notícias pela data de publicação em ordem decrescente
       const sortedNoticias = data.sort((a, b) => new Date(b.data_publicacao) - new Date(a.data_publicacao));
       setNoticias(sortedNoticias);
     } catch (error) {
@@ -60,20 +59,29 @@ function Noticias() {
     ? noticias.filter((noticia) => noticia.estilo && noticia.estilo.toLowerCase() === selectedEstilo.toLowerCase())
     : noticias;
 
+  const handleCopyLink = (id) => {
+    const url = `${window.location.origin}/noticias/${id}`;
+    navigator.clipboard.writeText(url)
+      .then(() => {
+        alert('Link copiado para a área de transferência: ' + url);
+      })
+      .catch((err) => {
+        console.error('Erro ao copiar o link: ', err);
+      });
+  };
+
   return (
     <>
       <br />
       <div className='procurar'>
         <div className='filtrar'>
-      <div className="filter">
-          <select id='select' value={selectedEstilo} onChange={(e) => setSelectedEstilo(e.target.value)}>
-            <option value="" id='todos'>Todos os estilos</option>
-            <option value="Esporte" id='green'>Esporte</option>
-          
-            <option value="noticia" id='cultura'>Notícias</option>
-           
-          </select>
-        </div>
+          <div className="filter">
+            <select id='select' value={selectedEstilo} onChange={(e) => setSelectedEstilo(e.target.value)}>
+              <option value="" id='todos'>Todos os estilos</option>
+              <option value="Esporte" id='green'>Esporte</option>
+              <option value="noticia" id='cultura'>Notícias</option>
+            </select>
+          </div>
         </div>
 
         <div className="search">
@@ -85,12 +93,11 @@ function Noticias() {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
           <button className="btn2" onClick={handleSearch}>
-            <svg className='lupa' xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"  viewBox="0 0 16 16">
+            <svg className='lupa' xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
               <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
             </svg>
           </button>
         </div>
-   
       </div>
       <br />
       <div className="noticias-container">
@@ -99,12 +106,14 @@ function Noticias() {
         <div>
           {filteredNoticias.map((noticia) => (
             <div key={noticia.id} id={`noticia-${noticia.id}`} className="noticia">
+               <button className='btn' onClick={() => handleCopyLink(noticia.id)}>Link</button> {/* Botão para copiar o link */}
               <h3 id='titulo' className={noticia.id === parseInt(noticiaId) ? 'selected' : ''}>{noticia.titulo}</h3>
               <br />
               <div className="img">
                 <img src={noticia.imagem} alt={noticia.titulo} className="imagem-noticia" srcSet={noticia.srcSet} />
               </div>
               <p>{noticia.resumo}</p>
+             
               {mostrarTextoCompleto[noticia.id] ? (
                 <div>
                   <p>{noticia.texto}</p>
