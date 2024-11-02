@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { supabase } from '../supabase/supabase';
-import { Helmet } from 'react-helmet';
 import './Noticias.css';
 
 function Noticias() {
@@ -55,33 +54,55 @@ function Noticias() {
     }
   };
 
-  // Filtrando notícias pelo estilo selecionado
   const filteredNoticias = selectedEstilo
     ? noticias.filter((noticia) => noticia.estilo && noticia.estilo.toLowerCase() === selectedEstilo.toLowerCase())
     : noticias;
 
   const handleCopyLink = (id) => {
-    const url = `${window.location.origin}/noticias/${id}`;
-    navigator.clipboard.writeText(url)
-      .then(() => {
-        alert('Link copiado para a área de transferência: ' + url);
-      })
-      .catch((err) => {
-        console.error('Erro ao copiar o link: ', err);
-      });
+    const noticia = noticias.find((n) => n.id === id);
+    if (noticia) {
+      const url = `${window.location.origin}/noticias/${id}`;
+      const ogTitle = `OLHOVIVO - ${noticia.titulo}`;
+      const ogDescription = noticia.resumo || "Veja as últimas notícias no OLHOVIVO.";
+      const ogImage = noticia.imagem || "URL_da_imagem_default"; // Use uma URL padrão se não houver imagem
+
+      // Cria as meta tags como string
+      const metaTags = `
+        <meta property="og:title" content="${ogTitle}" />
+        <meta property="og:description" content="${ogDescription}" />
+        <meta property="og:image" content="${ogImage}" />
+        <meta property="og:url" content="${url}" />
+        <meta property="og:type" content="website" />
+      `;
+
+      // Copia a URL para a área de transferência
+      navigator.clipboard.writeText(url)
+        .then(() => {
+          alert('Link copiado para a área de transferência: ' + url);
+          console.log('Meta Tags:', metaTags); // Log para verificação
+        })
+        .catch((err) => {
+          console.error('Erro ao copiar o link: ', err);
+        });
+    }
   };
+
+  useEffect(() => {
+    if (noticiaId) {
+      const noticia = noticias.find(n => n.id === parseInt(noticiaId));
+      if (noticia) {
+        document.title = `OLHOVIVO - ${noticia.titulo}`;
+        document.querySelector('meta[property="og:title"]').setAttribute("content", `OLHOVIVO - ${noticia.titulo}`);
+        document.querySelector('meta[property="og:description"]').setAttribute("content", noticia.resumo || "Veja as últimas notícias no OLHOVIVO.");
+        document.querySelector('meta[property="og:image"]').setAttribute("content", noticia.imagem || "URL_da_imagem_default");
+        document.querySelector('meta[property="og:url"]').setAttribute("content", `${window.location.origin}/noticias/${noticiaId}`);
+      }
+    }
+  }, [noticiaId, noticias]);
 
   return (
     <>
-      <Helmet>
-        <title>OLHOVIVO - Notícias</title>
-        <meta property="og:title" content="OLHOVIVO - Notícias" />
-        <meta property="og:description" content="Veja as últimas notícias no OLHOVIVO." />
-        <meta property="og:image" content="URL_da_imagem_default" />
-        <meta property="og:url" content={window.location.href} />
-        <meta property="og:type" content="website" />
-      </Helmet>
-
+      <br />
       <div className='procurar'>
         <div className='filtrar'>
           <div className="filter">
@@ -108,19 +129,21 @@ function Noticias() {
           </button>
         </div>
       </div>
-
+      <br />
       <div className="noticias-container">
         <h2 id='title'>De olho nas Notícias!</h2>
+        <br />
         <div>
           {filteredNoticias.map((noticia) => (
             <div key={noticia.id} id={`noticia-${noticia.id}`} className="noticia">
-              <button className='btn' onClick={() => handleCopyLink(noticia.id)}>Link</button>
-              <h3 id='titulo'>{noticia.titulo}</h3>
+              <button className='btn' onClick={() => handleCopyLink(noticia.id)}>Copiar Link</button>
+              <h3 id='titulo' className={noticia.id === parseInt(noticiaId) ? 'selected' : ''}>{noticia.titulo}</h3>
+              <br />
               <div className="img">
                 <img src={noticia.imagem} alt={noticia.titulo} className="imagem-noticia" />
               </div>
               <p>{noticia.resumo}</p>
-
+             
               {mostrarTextoCompleto[noticia.id] ? (
                 <div>
                   <p>{noticia.texto}</p>
@@ -129,7 +152,7 @@ function Noticias() {
                   <button className='btn' onClick={() => handleVerMenos(noticia.id)}>Menos</button>
                 </div>
               ) : (
-                <button className='btn' onClick={() => handleToggleTextoCompleto(noticia.id)}>Ver mais!!</button>
+                <button className='btn' onClick={() => handleToggleTextoCompleto(noticia.id)}>Ver mais!</button>
               )}
             </div>
           ))}
