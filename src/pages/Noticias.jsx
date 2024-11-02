@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { supabase } from '../supabase/supabase';
+import { Helmet } from 'react-helmet';
 import './Noticias.css';
 
 function Noticias() {
@@ -72,7 +73,15 @@ function Noticias() {
 
   return (
     <>
-      <br />
+      <Helmet>
+        <title>OLHOVIVO - Notícias</title>
+        <meta property="og:title" content="OLHOVIVO - Notícias" />
+        <meta property="og:description" content="Veja as últimas notícias no OLHOVIVO." />
+        <meta property="og:image" content="URL_da_imagem_default" />
+        <meta property="og:url" content={window.location.href} />
+        <meta property="og:type" content="website" />
+      </Helmet>
+
       <div className='procurar'>
         <div className='filtrar'>
           <div className="filter">
@@ -99,21 +108,19 @@ function Noticias() {
           </button>
         </div>
       </div>
-      <br />
+
       <div className="noticias-container">
         <h2 id='title'>De olho nas Notícias!</h2>
-        <br />
         <div>
           {filteredNoticias.map((noticia) => (
             <div key={noticia.id} id={`noticia-${noticia.id}`} className="noticia">
-               <button className='btn' onClick={() => handleCopyLink(noticia.id)}>Link</button> {/* Botão para copiar o link */}
-              <h3 id='titulo' className={noticia.id === parseInt(noticiaId) ? 'selected' : ''}>{noticia.titulo}</h3>
-              <br />
+              <button className='btn' onClick={() => handleCopyLink(noticia.id)}>Link</button>
+              <h3 id='titulo'>{noticia.titulo}</h3>
               <div className="img">
-                <img src={noticia.imagem} alt={noticia.titulo} className="imagem-noticia" srcSet={noticia.srcSet} />
+                <img src={noticia.imagem} alt={noticia.titulo} className="imagem-noticia" />
               </div>
               <p>{noticia.resumo}</p>
-             
+
               {mostrarTextoCompleto[noticia.id] ? (
                 <div>
                   <p>{noticia.texto}</p>
