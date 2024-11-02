@@ -129,7 +129,7 @@ function Noticias() {
                   <button className='btn' onClick={() => handleVerMenos(noticia.id)}>Menos</button>
                 </div>
               ) : (
-                <button className='btn' onClick={() => handleToggleTextoCompleto(noticia.id)}>Ver mais!</button>
+                <button className='btn' onClick={() => handleToggleTextoCompleto(noticia.id)}>Ver mais!!</button>
               )}
             </div>
           ))}
