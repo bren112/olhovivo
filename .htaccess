@@ -1,0 +1,8 @@
+# Ativar o mecanismo de reescrita
+RewriteEngine On
+
+# Definir a base
+RewriteBase /
+
+# Reescrever todas as URLs para o arquivo index.html
+RewriteRule ^ index.html [L]
