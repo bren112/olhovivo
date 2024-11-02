@@ -136,7 +136,7 @@ function Noticias() {
         <div>
           {filteredNoticias.map((noticia) => (
             <div key={noticia.id} id={`noticia-${noticia.id}`} className="noticia">
-              <button className='btn' onClick={() => handleCopyLink(noticia.id)}>Copiar Link</button>
+              <button className='btn' onClick={() => handleCopyLink(noticia.id)}>Copiar</button>
               <h3 id='titulo' className={noticia.id === parseInt(noticiaId) ? 'selected' : ''}>{noticia.titulo}</h3>
               <br />
               <div className="img">
